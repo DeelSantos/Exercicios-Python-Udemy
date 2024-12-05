@@ -1,10 +1,18 @@
-""" 
+"""
 Faça uma lista de compras com listas.
 O usuário deve ter a possibilidade de inserir, apagar e listar valores da sua lista.
 Não permita que o programa que com erros de indicies inexistentes na lista
 """
 
 import os
+
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def salvar_lista(lista):
+    print("Lista salva com sucesso")
+    for indice, valor in enumerate(lista):
+        print(indice, valor)
 
 lista = []
 
@@ -13,35 +21,33 @@ while True:
     opcao = input("[i]nserir [a]pagar [l]istar [s]air: ")
     
     if opcao == "i":
-        os.system('cls')
+        limpar_tela()
         valor = input("Valor: ")
         lista.append(valor)
     elif opcao == "a":
-        apagar = int(input("Selecione um valor para apagar: "))
-        os.system('cls')
+        limpar_tela()
         try:
-            indice = apagar
+            indice = int(input("Digite o índice do item que deseja apagar: "))
             del lista[indice]
         except ValueError:
-            print('Por favor digite número int.')
+            print('Por favor, digite um número inteiro.')
         except IndexError:
-            print('Índice não existe na lista')
-        except Exception:
-            print('Erro desconhecido')
+            print('Índice não existe na lista.')
+        except Exception as e:
+            print(f'Erro desconhecido: {e}')
     elif opcao == "l":
-        os.system('cls')
+        limpar_tela()
         for indice, valor in enumerate(lista):
             print(indice, valor)
     elif opcao == "s":
-        os.system('cls')
+        limpar_tela()
         salvar = input("Deseja salvar sua lista? [s]im ou [n]ão: ")
         if salvar == 's':
-            print("Lista salva com sucesso")
-            for indice, valor in enumerate(lista):
-                print(indice, valor)
+            salvar_lista(lista)
             break
         elif salvar == 'n':
             print("Beleza, flw")
-            break
-    else:
-        print("Opção Inválida")
+            confirmar_saida = input("Tem certeza que deseja sair? [s]im ou [n]ão: ")
+            if confirmar_saida == 's':
+                break
+        
